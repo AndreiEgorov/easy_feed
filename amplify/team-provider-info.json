@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-easyfeed-dev-225638-authRole",
+      "UnauthRoleArn": "arn:aws:iam::850665530308:role/amplify-easyfeed-dev-225638-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::850665530308:role/amplify-easyfeed-dev-225638-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-easyfeed-dev-225638-deployment",
+      "UnauthRoleName": "amplify-easyfeed-dev-225638-unauthRole",
+      "StackName": "amplify-easyfeed-dev-225638",
+      "StackId": "arn:aws:cloudformation:us-west-2:850665530308:stack/amplify-easyfeed-dev-225638/59fe5eb0-46aa-11ec-99dc-0682b490ec17",
+      "AmplifyAppId": "d3ermj6vfjyvph"
+    },
+    "categories": {
+      "function": {
+        "getFeedsLambda": {
+          "deploymentBucketName": "amplify-easyfeed-dev-225638-deployment",
+          "s3Key": "amplify-builds/getFeedsLambda-554c4d62544a2f53396d-build.zip"
+        }
+      }
+    }
+  }
+}
