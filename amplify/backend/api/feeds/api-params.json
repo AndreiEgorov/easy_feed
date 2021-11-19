@@ -1,0 +1,35 @@
+{
+  "paths": [
+    {
+      "name": "/feeds",
+      "lambdaFunction": "GetFeedsLambda",
+      "privacy": {
+        "open": true
+      },
+      "policyResourceName": "/feeds"
+    }
+  ],
+  "resourceName": "feeds",
+  "apiName": "feeds",
+  "functionArns": [
+    {
+      "lambdaFunction": "GetFeedsLambda"
+    }
+  ],
+  "privacy": {
+    "auth": 0,
+    "unauth": 0,
+    "authRoleName": "amplify-easyfeed-dev-194009-authRole",
+    "unAuthRoleName": "amplify-easyfeed-dev-194009-unauthRole"
+  },
+  "dependsOn": [
+    {
+      "category": "function",
+      "resourceName": "GetFeedsLambda",
+      "attributes": [
+        "Name",
+        "Arn"
+      ]
+    }
+  ]
+}
