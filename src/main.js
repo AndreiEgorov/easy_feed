@@ -1,4 +1,15 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from "vue";
+import App from "./App.vue";
 
-createApp(App).mount('#app')
+
+
+import '@aws-amplify/ui-vue';
+import Amplify from 'aws-amplify';
+import awsconfig from './aws-exports';
+
+
+Amplify.configure(awsconfig);
+
+const app = createApp(App);
+
+app.mount("#app");

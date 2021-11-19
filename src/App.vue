@@ -1,18 +1,33 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <Feeds :feeds="feedsData" />
 </template>
 
-
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Feeds from "./components/Feeds/Feeds.vue";
+import {API} from "aws-amplify";
 
+// TODO explore composition api and replace the below code
+// TODO explore store options for Vue3
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
+    Feeds,
+  },
+  data() {
+    return {
+      api: 'feeds',
+      path: '/feeds',
+      feedsData: []
+    };
+  },
+  created(){
+    console.log("cresated")
+    API.get(this.api, this.path)
+    .then(r => {
+      this.feedsData = r.feeds
+    })
   }
-}
+};
 </script>
 
 <style>
