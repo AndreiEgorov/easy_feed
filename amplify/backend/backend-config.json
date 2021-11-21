@@ -30,6 +30,10 @@
     "ArticleLoaderLambdaInvokeQueue": {
       "service": "customCDK",
       "providerPlugin": "awscloudformation"
+    },
+    "CreateFeedTopic": {
+      "service": "customCDK",
+      "providerPlugin": "awscloudformation"
     }
   }
 }
