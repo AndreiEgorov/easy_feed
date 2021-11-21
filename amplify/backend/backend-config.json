@@ -21,5 +21,15 @@
         }
       ]
     }
+  },
+  "custom": {
+    "SchedulerLambdaInvokeQueue": {
+      "service": "customCDK",
+      "providerPlugin": "awscloudformation"
+    },
+    "ArticleLoaderLambdaInvokeQueue": {
+      "service": "customCDK",
+      "providerPlugin": "awscloudformation"
+    }
   }
 }
