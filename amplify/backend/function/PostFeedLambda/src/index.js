@@ -14,5 +14,6 @@ exports.handler = async (event) => {
      }, 
         body: JSON.stringify('Posting message from PostFeedLambda'),
     };
+    
     return response;
 };
