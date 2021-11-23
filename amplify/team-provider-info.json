@@ -16,6 +16,10 @@
         "GetFeedsLambda": {
           "deploymentBucketName": "amplify-easyfeed-dev-194009-deployment",
           "s3Key": "amplify-builds/GetFeedsLambda-7235576e6237766f6e34-build.zip"
+        },
+        "PostFeedLambda": {
+          "deploymentBucketName": "amplify-easyfeed-dev-194009-deployment",
+          "s3Key": "amplify-builds/PostFeedLambda-515671673955622b7150-build.zip"
         }
       }
     }
