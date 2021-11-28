@@ -19,7 +19,7 @@
         },
         "PostFeedLambda": {
           "deploymentBucketName": "amplify-easyfeed-dev-194009-deployment",
-          "s3Key": "amplify-builds/PostFeedLambda-515671673955622b7150-build.zip"
+          "s3Key": "amplify-builds/PostFeedLambda-7a4d4f4e6c616d2b6869-build.zip"
         }
       }
     }
