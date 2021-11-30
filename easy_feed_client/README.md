@@ -1,4 +1,4 @@
-# easy_feed_client
+# easy_feed_client (Serverless framework to be added)
 
 ## Project setup
 ```
