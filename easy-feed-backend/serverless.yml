@@ -11,5 +11,5 @@ provider:
   lambdaHashingVersion: 20201221
 
 functions:
-  hello:
-    handler: handler.hello
+  GetFeedsLambda:
+    handler: src/functions/feeds/GetFeeds/handler.GetFeedsLambda
