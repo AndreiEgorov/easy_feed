@@ -9,7 +9,24 @@ provider:
   name: aws
   runtime: nodejs12.x
   lambdaHashingVersion: 20201221
+  stage: dev
+  region: us-west-2
+  # httpApi:
+  #   metrics: true # turn on detailed metrics
 
 functions:
   GetFeedsLambda:
-    handler: src/functions/feeds/GetFeeds/handler.GetFeedsLambda
+    handler: src/functions/feeds/GetFeeds/GetFeedsLambda.GetFeedsLambda
+    description: Pull all available feeds
+    events:
+      - httpApi: 
+          path: /feeds
+          method: get
+  PostFeedsLambda:
+    handler: src/functions/feeds/PostFeeds/PostFeedsLambda.PostFeedsLambda
+    description: Submit an array of feed urls to be processed
+    events:
+      - httpApi: 
+          path: /feeds
+          method: post
+
