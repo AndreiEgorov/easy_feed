@@ -11,8 +11,8 @@ provider:
   lambdaHashingVersion: 20201221
   stage: dev
   region: us-west-2
-  # httpApi:
-  #   metrics: true # turn on detailed metrics
+  httpApi:
+    metrics: true # turn on detailed metrics
 
 functions:
   GetFeedsLambda:

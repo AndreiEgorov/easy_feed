@@ -9,7 +9,7 @@ module.exports.PostFeedsLambda = async (event) => {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Headers": "*",
     },
-    body: JSON.stringify({ "feeds created" }),
+    body: JSON.stringify({ data:"feeds created" }),
   };
   return response;
 };
