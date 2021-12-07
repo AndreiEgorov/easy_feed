@@ -1,9 +1,12 @@
 org: andreie
 app: easy-feed
 service: easy-feed-backend
+variablesResolutionMode: 20210219
 
 frameworkVersion: '2 || 3'
 
+custom:
+  dotenvVars: ${file(configs.js)}
 
 provider:
   name: aws
@@ -23,10 +26,11 @@ functions:
           path: /feeds
           method: get
   PostFeedsLambda:
+    environment:
+      MY_ENV_VAR: ${self:custom.dotenvVars.MY_ENV_VAR}
     handler: src/functions/feeds/PostFeeds/PostFeedsLambda.PostFeedsLambda
     description: Submit an array of feed urls to be processed
     events:
       - httpApi: 
           path: /feeds
           method: post
-
