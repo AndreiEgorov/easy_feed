@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports.GetFeedsLambda = async (event) => {
-  console.log("FULL GetFeedsLambda EVENT:", event);
+  console.log("FULL GetFeedsLambda EVENT:", JSON.stringify(event));
   const staticFeeds = [
     "https://cli.vuejs.org/",
     "https://www.google.com/",

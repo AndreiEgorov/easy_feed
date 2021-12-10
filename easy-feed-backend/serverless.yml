@@ -14,23 +14,54 @@ provider:
   lambdaHashingVersion: 20201221
   stage: dev
   region: us-west-2
+  tracing:
+    lambda: true
+    apiGateway: true
+  logs:
+    restApi: true
   httpApi:
     metrics: true # turn on detailed metrics
+resources:
+  Resources:
+    EventsEasyFeedTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: EasyFeedTest1
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+    EasyFeedApiGatewayDynamoRole:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: EastFeedApiGatewayDynamoRole
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: 'Allow'
+              Principal:
+                Service: 'apigateway.amazonaws.com'
+              Action:
+                - 'sts:AssumeRole'
+        Policies:
+          - PolicyName: 'EasyFeedApiGatewayDynamoPolicy'
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: 'Allow'
+                  Action:
+                    - 'dynamodb:Query'
+                  Resource:
+                    - Fn::GetAtt: [EventsEasyFeedTable, Arn]
+                - Effect: 'Allow'
+                  Action:
+                    - 'dynamodb:ListTables'
+                  Resource: '*'
+                  Condition: {}
+  
 
-functions:
-  GetFeedsLambda:
-    handler: src/functions/feeds/GetFeeds/GetFeedsLambda.GetFeedsLambda
-    description: Pull all available feeds
-    events:
-      - httpApi: 
-          path: /feeds
-          method: get
-  PostFeedsLambda:
-    environment:
-      MY_ENV_VAR: ${self:custom.dotenvVars.MY_ENV_VAR}
-    handler: src/functions/feeds/PostFeeds/PostFeedsLambda.PostFeedsLambda
-    description: Submit an array of feed urls to be processed
-    events:
-      - httpApi: 
-          path: /feeds
-          method: post
+
+

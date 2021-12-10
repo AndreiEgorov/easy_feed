@@ -1,0 +1,36 @@
+org: andreie
+app: easy-feed
+service: easy-feed-backend
+variablesResolutionMode: 20210219
+
+frameworkVersion: '2 || 3'
+
+custom:
+  dotenvVars: ${file(configs.js)}
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+  stage: dev
+  region: us-west-2
+  httpApi:
+    metrics: true # turn on detailed metrics
+
+functions:
+  GetFeedsLambda:
+    handler: src/functions/feeds/GetFeeds/GetFeedsLambda.GetFeedsLambda
+    description: Pull all available feeds
+    events:
+      - httpApi: 
+          path: /feeds
+          method: get
+  PostFeedsLambda:
+    environment:
+      MY_ENV_VAR: ${self:custom.dotenvVars.MY_ENV_VAR}
+    handler: src/functions/feeds/PostFeeds/PostFeedsLambda.PostFeedsLambda
+    description: Submit an array of feed urls to be processed
+    events:
+      - httpApi: 
+          path: /feeds
+          method: post
