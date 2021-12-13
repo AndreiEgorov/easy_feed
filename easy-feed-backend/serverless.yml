@@ -8,6 +8,8 @@ frameworkVersion: '2 || 3'
 custom:
   dotenvVars: ${file(configs.js)}
 
+outputs:
+  dynamo-db-info: ${self.resources.Resources.EventsEasyFeedTable}
 provider:
   name: aws
   runtime: nodejs12.x
@@ -55,13 +57,70 @@ resources:
                   Action:
                     - 'dynamodb:Query'
                   Resource:
-                    - Fn::GetAtt: [EventsEasyFeedTable, Arn]
-                - Effect: 'Allow'
-                  Action:
-                    - 'dynamodb:ListTables'
-                  Resource: '*'
-                  Condition: {}
-  
+                    - Fn::GetAtt: [EventsEasyFeedTable, Arn] 
+    EasyFeedApi:
+      Type: AWS::ApiGateway::RestApi
+      Properties:
+        Description: "Api for easy feeds app"
+        Name: !Sub "${self:app}"
+    FeedsResource:
+      Type: AWS::ApiGateway::Resource
+      Properties:
+        RestApiId:
+          Ref: EasyFeedApi
+        ParentId:
+          Fn::GetAtt:
+            - EasyFeedApi
+            - RootResourceId
+        PathPart: feeds
+    FeedsAPI:
+      Type: AWS::ApiGateway::Method
+      Properties:
+        HttpMethod: GET
+        ResourceId: 
+          Ref: FeedsResource
+        RestApiId: 
+          Ref: EasyFeedApi
+        OperationName: "GetAllFeeds"
+        AuthorizationType: NONE
+        Integration:
+          Type: AWS
+          IntegrationHttpMethod: GET
+          Uri: arn:aws:apigateway:us-east-2:dynamodb:action/Query
+          Credentials: !GetAtt EasyFeedApiGatewayDynamoRole.Arn
+          RequestTemplates:
+            application/json: |
+               #set($inputRoot = $input.path('$'))
+                {
+                    "TableName":"${self:resources.Resources.EventsEasyFeedTable.Properties.TableName}",
+                    "PrimaryKey": "id",
+                    "KeyConditionExpression": {
+                        ":v1": {
+                        "S":"$input.params('Hi')"
+                    }
+                }
+          IntegrationResponses:
+            - StatusCode: '200'
+              ResponseParameters:
+                method.response.header.Access-Control-Allow-Origin: "'*'"
+              ResponseTemplates:
+                application/json: '{}'
+            - StatusCode: '400'
+              SelectionPattern: "4\\d{2}"
+              ResponseParameters:
+                method.response.header.Access-Control-Allow-Origin: "'*'"
+        MethodResponses:
+          - StatusCode: '200'
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Origin: true
+            ResponseModels:
+              application/json: Empty
+          - StatusCode: '400'
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Origin: true
+            ResponseModels:
+              application/json: Error
+
 
 
 
