@@ -94,6 +94,8 @@ resources:
           IntegrationHttpMethod: POST
           Uri: arn:aws:apigateway:us-east-2:dynamodb:action/Query
           Credentials: !GetAtt EasyFeedApiGatewayDynamoRole.Arn
+          RequestParameters:
+            integration.request.header.Content-Type: "'application/json'"
           RequestTemplates:
             application/json: |
                #set($inputRoot = $input.path('$'))
